@@ -4,16 +4,16 @@ import { useEffect, useRef, useState } from "react";
 function useYouTube() {
   const playerRef = useRef(null);
   const intervalRef = useRef(0);
-  const [isPaused, setIsPaused] = useState(true);
+  const isPaused = useRef(true);
+  const [playerVideoId, setPlayerVideoId] = useState('');
 
   const createPlayer = () => {
     console.log('*** creating player')
     playerRef.current = new window.YT.Player(
       'player',
       {
-        height: '100',
-        width: '100',
-        videoId: 'gaGrHUekGrc',
+        height: '0',
+        width: '0',
       }
     );
   }
@@ -31,7 +31,7 @@ function useYouTube() {
     intervalRef.current = setInterval(checkForAPI, 1000);
   }, []);
 
-  return { playerRef, isPaused, setIsPaused };
+  return { playerRef, isPaused, playerVideoId, setPlayerVideoId };
 }
 
 export default useYouTube;
