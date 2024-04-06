@@ -1,0 +1,16 @@
+.volume-controls {
+    display: flex;
+    justify-content: center;
+}
+
+.dim {
+    color: rgba(117, 117, 117, 0.5);
+}
+
+.range {
+    transition: all 1s ease-out;
+}
+
+.dim-range {
+    opacity: 0.17;
+}

@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from "react";
 function useYouTube() {
   const playerRef = useRef(null);
   const intervalRef = useRef(0);
-  const isPaused = useRef(true);
+  const [isPaused, setIsPaused] = useState(true);
+  const [isTrackLoaded, setIsTrackLoaded] = useState(false);
   const [playerVideoId, setPlayerVideoId] = useState('');
+  const [rangeValue, setRangeValue] = useState(0.5);
+  const [volumeLevel, setVolumeLevel] = useState(50);
 
   const createPlayer = () => {
-    console.log('*** creating player')
     playerRef.current = new window.YT.Player(
       'player',
       {
@@ -20,18 +22,59 @@ function useYouTube() {
 
   useEffect(() => {
     const checkForAPI = () => {
-      console.log('*** checking for api');
       if (window.YT !== null) {
-        console.log(`*** clearing check interval ID ${intervalRef.current}`)
         clearInterval(intervalRef.current);
         createPlayer();
       }
     }
-    console.log('*** setting check interval');
-    intervalRef.current = setInterval(checkForAPI, 1000);
+    intervalRef.current = setInterval(checkForAPI, 500);
   }, []);
 
-  return { playerRef, isPaused, playerVideoId, setPlayerVideoId };
+  const pause = () => {
+    playerRef.current.stopVideo();
+    setIsPaused(true);
+  }
+  
+  const resume = () => {
+    playerRef.current.playVideo();
+    setIsPaused(false);
+  }
+
+  const togglePlayback = () => {
+    isPaused ? resume() : pause();
+  }
+
+  const changeTrack = (newVideoId) => {
+    if (playerVideoId === newVideoId) {
+      playerRef.current.stopVideo();
+      setPlayerVideoId('');
+      setIsTrackLoaded(false);
+      setIsPaused(true);
+    } else {
+      playerRef.current.loadVideoById(newVideoId);
+      playerRef.current.playVideo();
+      setPlayerVideoId(newVideoId);
+      setIsTrackLoaded(true);
+      setIsPaused(false);
+    }
+  }
+
+  const changePlayerVolume = (newVolumeLevel, newRangeValue) => {
+    playerRef.current.setVolume(newVolumeLevel);
+    setVolumeLevel(newVolumeLevel);
+    setRangeValue(newRangeValue);
+  }
+
+  return {
+    changePlayerVolume,
+    changeTrack,
+    isPaused,
+    isTrackLoaded, 
+    playerVideoId, 
+    rangeValue,
+    togglePlayback,
+    volumeLevel,
+  };
 }
 
 export default useYouTube;

@@ -1,8 +1,9 @@
 import useYouTube from './useYouTube.js';
+import Volume from '../Controls/Volume/Volume.js';
 import "./Youtube.css";
+import PlayButton from '../Controls/PlayButton/PlayButton.js';
 
 const AmbientTrack = ({ name, trackVideoId, changeTrackFunc, selected }) => {
-  console.log(`making track: ${trackVideoId}`);
   return (
     <button 
       onClick={() => changeTrackFunc(trackVideoId)}
@@ -13,37 +14,26 @@ const AmbientTrack = ({ name, trackVideoId, changeTrackFunc, selected }) => {
 }
 
 const YouTube = () => {
-  const { playerRef, isPaused, playerVideoId, setPlayerVideoId } = useYouTube();
+  const {
+    changePlayerVolume,
+    changeTrack,
+    isPaused,
+    isTrackLoaded,
+    playerVideoId, 
+    rangeValue,
+    togglePlayback,
+    volumeLevel, 
+  } = useYouTube();
+
   const defaultTracks = [
+    {trackName: "cafe", trackVideoId: "gaGrHUekGrc"},
+    {trackName: "campfire", trackVideoId: "QMJYlmX1sNU"},
+    {trackName: "fireplace", trackVideoId: "K0pJRo0XU8s"},
+    {trackName: "lab", trackVideoId: "eGeJF85SOdQ"},
     {trackName: "rain", trackVideoId: "LlKyGAGHc4c"},
-    {trackName: "cafe", trackVideoId: "gaGrHUekGrc"}
+    {trackName: "storm", trackVideoId: "EbMZh-nQFsU"},
+    {trackName: "waves", trackVideoId: "ibZUd-6pDeY"},
   ]
-
-  const togglePlayback = () => {
-    if (isPaused.current) {
-      console.log('*** starting playback');
-      playerRef.current.playVideo();
-    } else {
-      console.log('*** stopping playback');
-      playerRef.current.stopVideo();
-    }
-    isPaused.current = !isPaused.current;
-  }
-
-  const changeTrack = (newVideoId) => {
-    if (playerVideoId === newVideoId) {
-      console.log('*** Same track selected, stopping player');
-      playerRef.current.stopVideo();
-      setPlayerVideoId('');
-      isPaused.current = true;
-    } else {
-      console.log(`*** Changing track: ${newVideoId}`)
-      playerRef.current.loadVideoById(newVideoId);
-      setPlayerVideoId(newVideoId);
-      playerRef.current.playVideo();
-      isPaused.current = false;
-    }
-  }
 
   return (
     <section className='youtube-player media-module'>
@@ -60,7 +50,16 @@ const YouTube = () => {
         }
       </div>
       <div className='player-controls'>
-        <button onClick={togglePlayback}>toggle</button>
+        <PlayButton
+          isPaused={isPaused}
+          togglePlayback={togglePlayback}
+          isTrackLoaded={isTrackLoaded} />
+
+        <Volume 
+          changePlayerVolume={changePlayerVolume}
+          isTrackLoaded={isTrackLoaded}
+          rangeValue={rangeValue}
+          volumeLevel={volumeLevel} />
       </div>
     </section>
   )
