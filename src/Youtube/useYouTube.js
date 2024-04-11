@@ -28,7 +28,7 @@ function useYouTube() {
 
   const createPlayer = () => {
     playerRef.current = new window.YT.Player(
-      'player',
+      'youtube-ambience-player',
       {
         height: '0',
         width: '0',

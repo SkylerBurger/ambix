@@ -86,7 +86,7 @@ const YouTube = () => {
   return (
     <section className='youtube-player media-module'>
       <h2>youtube</h2>
-      <div id='player'></div>
+      <div id='youtube-ambience-player'></div>
       <div className='ambience-tracks'>
         { tracklist.map(({trackName, trackVideoId}, i) => {
             return <AmbientTrack
