@@ -11,11 +11,13 @@ const defaultTracklist = [
   {trackName: "waves", trackVideoId: "ibZUd-6pDeY"},
 ]
 
+
 const saveTracklist =(tracklist) => {
   localStorage.setItem('ambient-tracklist', JSON.stringify(tracklist));
 };
 
-function useYouTube() {
+
+function useYouTubeAmbience() {
   const playerRef = useRef(null);
   const intervalRef = useRef(0);
   const [isPaused, setIsPaused] = useState(true);
@@ -117,4 +119,5 @@ function useYouTube() {
   };
 }
 
-export default useYouTube;
+
+export default useYouTubeAmbience;

@@ -1,40 +1,10 @@
 import './Volume.css';
+import useVolume from './useVolume.js';
 
-const Volume = ({ changePlayerVolume, isTrackLoaded, rangeValue, volumeLevel }) => {
+
+const Volume = ({ changePlayerVolume, isTrackLoaded, rangeValue }) => {
   
-  const adjustForHumans = (newRangeValue) => {
-    return parseInt((Math.pow(newRangeValue, 2) * 100).toFixed(0));
-  }
-
-  const volumeButtonHandler = (increment) => {
-    if (!isTrackLoaded) return;
-    
-    console.log(`*** current range value ${rangeValue}`);
-    console.log(`*** Increment ${increment} Type ${typeof increment}`);
-    let newRangeValue = rangeValue + increment;
-    if (newRangeValue < 0 || newRangeValue > 100) {
-      newRangeValue = newRangeValue > 100 ? 100 : 0;
-    }
-    console.log(`*** new range value ${newRangeValue}`);
-
-    const newVolumeLevel = adjustForHumans(newRangeValue);
-    console.log(`*** new volume level ${newVolumeLevel}`);
-    changePlayerVolume(newVolumeLevel, newRangeValue);
-  }
-
-  const rangeHandler = (event) => {
-    if (!isTrackLoaded) return;
-
-    console.log(`*** current range value ${rangeValue}`);
-
-    const newRangeValue = parseFloat(event.target.value);
-    console.log(`*** new range value ${newRangeValue}`);
-
-    const newVolumeLevel = adjustForHumans(newRangeValue);
-    console.log(`*** new volume level ${newVolumeLevel}`);
-
-    changePlayerVolume(newVolumeLevel, newRangeValue);
-  }
+  const { rangeHandler, volumeButtonHandler } = useVolume(changePlayerVolume, isTrackLoaded, rangeValue);
 
   return (
     <div className="volume-controls">
@@ -48,5 +18,6 @@ const Volume = ({ changePlayerVolume, isTrackLoaded, rangeValue, volumeLevel }) 
     </div>  
   )
 }
+
 
 export default Volume;

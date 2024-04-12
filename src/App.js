@@ -1,6 +1,8 @@
+import YouTubeAmbience from './YouTube/YouTubeAmbience/YouTubeAmbience';
+import YouTubePlaylist from './YouTube/YouTubePlaylist/YouTubePlaylist';
+
 import './App.css';
-import YouTube from './Youtube/Youtube';
-import YouTubePlaylist from './YouTubePlaylist/YouTubePlaylist';
+
 
 function App() {
   return (
@@ -8,10 +10,11 @@ function App() {
       <h1>Ambix</h1>
       <div className='media-modules'>
         <YouTubePlaylist />
-        <YouTube />
+        <YouTubeAmbience />
       </div>
     </div>
   );
 }
+
 
 export default App;

@@ -1,8 +1,11 @@
-import useYouTube from './useYouTube.js';
-import Volume from '../Controls/Volume/Volume.js';
-import "./Youtube.css";
-import PlayButton from '../Controls/PlayButton/PlayButton.js';
 import { useState } from 'react';
+
+import PlayButton from '../../Controls/PlayButton/PlayButton.js';
+import Volume from '../../Controls/Volume/Volume.js';
+
+import "./YouTubeAmbience.css";
+import useYouTubeAmbience from './useYouTubeAmbience.js';
+
 
 const AmbientTrack = ({ buttonKey, name, trackVideoId, changeTrackFunc, selected }) => {
   const selectedClassName = 'track' + (selected ? ' selected': '');
@@ -14,6 +17,7 @@ const AmbientTrack = ({ buttonKey, name, trackVideoId, changeTrackFunc, selected
     </button>
   )
 }
+
 
 const AddTrackModal = ({ isVisible, setIsVisible, tracklist, setTracklist }) => {
   const [formValues, setFormValues] = useState({});
@@ -66,7 +70,8 @@ const AddTrackModal = ({ isVisible, setIsVisible, tracklist, setTracklist }) => 
   );
 };
 
-const YouTube = () => {
+
+const YouTubeAmbience = () => {
   const {
     changePlayerVolume,
     changeTrack,
@@ -78,10 +83,9 @@ const YouTube = () => {
     isTrackLoaded, 
     rangeValue,
     togglePlayback,
-    volumeLevel,
     tracklist,
     setTracklist, 
-  } = useYouTube();
+  } = useYouTubeAmbience();
 
   return (
     <section className='youtube-player media-module'>
@@ -116,11 +120,11 @@ const YouTube = () => {
         <Volume 
           changePlayerVolume={changePlayerVolume}
           isTrackLoaded={isTrackLoaded}
-          rangeValue={rangeValue}
-          volumeLevel={volumeLevel} />
+          rangeValue={rangeValue} />
       </div>
     </section>
   );
 };
 
-export default YouTube;
+
+export default YouTubeAmbience;

@@ -1,14 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 
 function useYouTubePlaylist() {
   const playerRef = useRef(null);
-  const intervalRef = useRef(0);
   const [isPaused, setIsPaused] = useState(true);
   const [isTrackLoaded, setIsTrackLoaded] = useState(false);
   const [rangeValue, setRangeValue] = useState(0.5);
   const [volumeLevel, setVolumeLevel] = useState(50);
-  const [currentButtonKey, setCurrentButtonKey] = useState(null);
 
   const handleOnReady = (newPlaylistId) => {
     console.log(`*** attempting to fetch playlist ${newPlaylistId}`);
@@ -39,17 +37,6 @@ function useYouTubePlaylist() {
     setIsTrackLoaded(true);
   }
 
-  // useEffect(() => {
-  //   const checkForAPI = () => {
-  //     if (window.YT !== null) {
-  //       clearInterval(intervalRef.current);
-  //       createPlayer();
-  //     }
-  //   };
-
-  //   intervalRef.current = setInterval(checkForAPI, 500);
-  // }, []);
-
   const pause = () => {
     playerRef.current.stopVideo();
     setIsPaused(true);
@@ -64,24 +51,8 @@ function useYouTubePlaylist() {
     isPaused ? resume() : pause();
   };
 
-  const changeTrack = (newButtonKey, newPlaylistId) => {
+  const changeTrack = (newPlaylistId) => {
     createPlayer(newPlaylistId);
-    
-    // if (currentButtonKey === newButtonKey) {
-    //   playerRef.current.stopVideo();
-    //   setCurrentButtonKey(null);
-    //   setIsTrackLoaded(false);
-    //   setIsPaused(true);
-    // } else {
-    //   console.log(`*** tried to start playlist: ${newPlaylistId}`);
-    //   const videoIdsArr = await playerRef.current.getPlaylist(newPlaylistId);
-    //   console.log(`*** Ids grabbed ${videoIdsArr}`);
-    //   playerRef.current.loadPlaylist(videoIdsArr);
-    //   playerRef.current.playVideo();
-    //   setCurrentButtonKey(newButtonKey);
-    //   setIsTrackLoaded(true);
-    //   setIsPaused(false);
-    // }
   };
 
   const changePlayerVolume = (newVolumeLevel, newRangeValue) => {
@@ -89,16 +60,6 @@ function useYouTubePlaylist() {
     setVolumeLevel(newVolumeLevel);
     setRangeValue(newRangeValue);
   };
-  
-  // const deleteTrack = () => {
-  //   const newTracklist = tracklist.filter((track, index) => currentButtonKey !== index);
-  //   playerRef.current.stopVideo();
-  //   saveTracklist(newTracklist)
-  //   setTracklist(newTracklist);
-  //   setCurrentButtonKey(null);
-  //   setIsPaused(true);
-  //   setIsTrackLoaded(false);
-  // };
 
   return {
     changePlayerVolume,
@@ -110,5 +71,6 @@ function useYouTubePlaylist() {
     volumeLevel,
   };
 }
+
 
 export default useYouTubePlaylist;

@@ -1,7 +1,8 @@
-import useYouTube from './useYouTubePlaylist.js';
-import Volume from '../Controls/Volume/Volume.js';
+import PlayButton from '../../Controls/PlayButton/PlayButton.js';
+import Volume from '../../Controls/Volume/Volume.js';
+
 import "./YouTubePlaylist.css";
-import PlayButton from '../Controls/PlayButton/PlayButton.js';
+import useYouTube from './useYouTubePlaylist.js';
 
 
 const YouTubePlaylist = () => {
@@ -12,14 +13,13 @@ const YouTubePlaylist = () => {
     isTrackLoaded, 
     rangeValue,
     togglePlayback,
-    volumeLevel,
   } = useYouTube();
 
   return (
     <section className='youtube-player media-module'>
       <h2>youtube playlist</h2>
       <div id='youtube-playlist-player'></div>
-      <button onClick={() => changeTrack(1, 'PLu6Ikpqc0gHVCcDaYQy0_W6WyvP_Kx3Wg')}>Test</button>
+      <button onClick={() => changeTrack('PLu6Ikpqc0gHVCcDaYQy0_W6WyvP_Kx3Wg')}>Test</button>
       <div className='player-controls'>
         <PlayButton
           isPaused={isPaused}
@@ -29,11 +29,11 @@ const YouTubePlaylist = () => {
         <Volume 
           changePlayerVolume={changePlayerVolume}
           isTrackLoaded={isTrackLoaded}
-          rangeValue={rangeValue}
-          volumeLevel={volumeLevel} />
+          rangeValue={rangeValue} />
       </div>
     </section>
   );
 };
+
 
 export default YouTubePlaylist;
