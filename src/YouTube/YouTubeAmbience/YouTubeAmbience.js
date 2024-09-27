@@ -5,7 +5,7 @@ import Volume from '../../Controls/Volume/Volume.js';
 
 import "./YouTubeAmbience.css";
 import useYouTubeAmbience from './useYouTubeAmbience.js';
-
+import { YouTubePlayer } from '../YouTubePlayer/YouTubePlayer.js';
 
 const AmbientTrack = ({ buttonKey, name, trackVideoId, changeTrackFunc, selected }) => {
   const selectedClassName = 'track' + (selected ? ' selected': '');
@@ -87,13 +87,15 @@ const YouTubeAmbience = () => {
     setTracklist, 
     showVideo,
     toggleVideo,
+    playerRef,
+    playerId,
   } = useYouTubeAmbience();
 
   return (
     <section className='youtube-player media-module'>
       <h2>youtube</h2>
       <div className="player-box">
-        <div id='youtube-ambience-player'></div>
+        <YouTubePlayer playerRef={playerRef} playerId={playerId} />
         <i className={`eye-icon fas fa-reguar ${showVideo ? "fa-eye" : "fa-eye-slash"}`} onClick={toggleVideo} />
       </div>
       <div className='ambience-tracks'>
