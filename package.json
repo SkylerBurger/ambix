@@ -9,8 +9,7 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "now": "npm run build && serve -s build",
+    "start": "npm run build && serve -s build",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },

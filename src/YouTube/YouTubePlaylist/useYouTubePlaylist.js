@@ -22,8 +22,8 @@ function useYouTubePlaylist() {
     playerRef.current = new window.YT.Player(
       'youtube-playlist-player',
       {
-        height: '0',
-        width: '0',
+        // height: '0',
+        // width: '0',
         playerVars: {
           listType: 'playlist',
           list: playlistId,

@@ -85,12 +85,17 @@ const YouTubeAmbience = () => {
     togglePlayback,
     tracklist,
     setTracklist, 
+    showVideo,
+    toggleVideo,
   } = useYouTubeAmbience();
 
   return (
     <section className='youtube-player media-module'>
       <h2>youtube</h2>
-      <div id='youtube-ambience-player'></div>
+      <div className="player-box">
+        <div id='youtube-ambience-player'></div>
+        <i className={`eye-icon fas fa-reguar ${showVideo ? "fa-eye" : "fa-eye-slash"}`} onClick={toggleVideo} />
+      </div>
       <div className='ambience-tracks'>
         { tracklist.map(({trackName, trackVideoId}, i) => {
             return <AmbientTrack

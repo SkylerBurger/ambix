@@ -27,14 +27,12 @@ function useYouTubeAmbience() {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [tracklist, setTracklist] = useState([]);
   const [currentButtonKey, setCurrentButtonKey] = useState(null);
+  const [showVideo, setShowVideo] = useState(true);
+  const [currentTrack, setCurrentTrack] = useState(null);
 
   const createPlayer = () => {
     playerRef.current = new window.YT.Player(
       'youtube-ambience-player',
-      {
-        height: '0',
-        width: '0',
-      }
     );
   }
 
@@ -56,6 +54,28 @@ function useYouTubeAmbience() {
 
     intervalRef.current = setInterval(checkForAPI, 500);
   }, []);
+
+  useEffect(() => {
+    const playerElement = document.getElementById('youtube-ambience-player');
+    if (currentTrack === null) {
+      playerElement.classList.add('hidden-player');
+      setShowVideo(false);
+    } else {
+      playerElement.classList.remove('hidden-player');
+      setShowVideo(true);
+    }
+  } , [currentTrack, setShowVideo]);
+
+  const toggleVideo = () => {
+    const newShowState = !showVideo;
+    const playerElement = document.getElementById('youtube-ambience-player');
+    if (newShowState) {
+      playerElement.classList.remove('hidden-player');
+    } else {
+      playerElement.classList.add('hidden-player');
+    }
+    setShowVideo(!showVideo);
+  }
 
   const pause = () => {
     playerRef.current.stopVideo();
@@ -80,6 +100,7 @@ function useYouTubeAmbience() {
     } else {
       playerRef.current.loadVideoById(newVideoId);
       playerRef.current.playVideo();
+      setCurrentTrack(newVideoId);
       setCurrentButtonKey(newButtonKey);
       setIsTrackLoaded(true);
       setIsPaused(false);
@@ -116,6 +137,8 @@ function useYouTubeAmbience() {
     volumeLevel,
     tracklist,
     setTracklist,
+    toggleVideo,
+    showVideo,
   };
 }
 
