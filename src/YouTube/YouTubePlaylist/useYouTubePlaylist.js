@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 
-
 function useYouTubePlaylist() {
   const playerRef = useRef(null);
   const [isPaused, setIsPaused] = useState(true);
@@ -12,36 +11,33 @@ function useYouTubePlaylist() {
     console.log(`*** attempting to fetch playlist ${newPlaylistId}`);
     const videoIdsArr = playerRef.current.getPlaylist(newPlaylistId);
     console.log(`*** Video IDs fetched: ${videoIdsArr}`);
-    console.log(`*** Loading playlist into player`)
+    console.log(`*** Loading playlist into player`);
     playerRef.current.loadPlaylist(videoIdsArr);
-    console.log(`*** starting video`)
+    console.log(`*** starting video`);
     playerRef.current.playVideo();
-  }
+  };
 
   const createPlayer = (playlistId) => {
-    playerRef.current = new window.YT.Player(
-      'youtube-playlist-player',
-      {
-        // height: '0',
-        // width: '0',
-        playerVars: {
-          listType: 'playlist',
-          list: playlistId,
-        },
-        events: {
-          "onReady": () => handleOnReady(playlistId),
-        },
-      }
-    );
-    
+    playerRef.current = new window.YT.Player("youtube-playlist-player", {
+      // height: '0',
+      // width: '0',
+      playerVars: {
+        listType: "playlist",
+        list: playlistId,
+      },
+      events: {
+        onReady: () => handleOnReady(playlistId),
+      },
+    });
+
     setIsTrackLoaded(true);
-  }
+  };
 
   const pause = () => {
     playerRef.current.stopVideo();
     setIsPaused(true);
   };
-  
+
   const resume = () => {
     playerRef.current.playVideo();
     setIsPaused(false);
@@ -71,6 +67,5 @@ function useYouTubePlaylist() {
     volumeLevel,
   };
 }
-
 
 export default useYouTubePlaylist;

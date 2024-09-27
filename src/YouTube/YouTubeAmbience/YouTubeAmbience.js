@@ -1,27 +1,38 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import PlayButton from '../../Controls/PlayButton/PlayButton.js';
-import Volume from '../../Controls/Volume/Volume.js';
+import PlayButton from "../../Controls/PlayButton/PlayButton.js";
+import Volume from "../../Controls/Volume/Volume.js";
 
 import "./YouTubeAmbience.css";
-import useYouTubeAmbience from './useYouTubeAmbience.js';
-import { YouTubePlayer } from '../YouTubePlayer/YouTubePlayer.js';
+import useYouTubeAmbience from "./useYouTubeAmbience.js";
+import { YouTubePlayer } from "../YouTubePlayer/YouTubePlayer.js";
 
-const AmbientTrack = ({ buttonKey, name, trackVideoId, changeTrackFunc, selected }) => {
-  const selectedClassName = 'track' + (selected ? ' selected': '');
+const AmbientTrack = ({
+  buttonKey,
+  name,
+  trackVideoId,
+  changeTrackFunc,
+  selected,
+}) => {
+  const selectedClassName = "track" + (selected ? " selected" : "");
   return (
-    <button 
+    <button
       onClick={() => changeTrackFunc(buttonKey, trackVideoId)}
-      className={ selectedClassName }>
-        { name }
+      className={selectedClassName}
+    >
+      {name}
     </button>
-  )
-}
+  );
+};
 
-
-const AddTrackModal = ({ isVisible, setIsVisible, tracklist, setTracklist }) => {
+const AddTrackModal = ({
+  isVisible,
+  setIsVisible,
+  tracklist,
+  setTracklist,
+}) => {
   const [formValues, setFormValues] = useState({});
-  const modalClass = 'add-track' + (isVisible ? '' : ' hidden');
+  const modalClass = "add-track" + (isVisible ? "" : " hidden");
 
   const changeHandler = (event) => {
     const newFormValues = {
@@ -30,46 +41,45 @@ const AddTrackModal = ({ isVisible, setIsVisible, tracklist, setTracklist }) => 
     };
     setFormValues(newFormValues);
   };
-  
+
   const handleAddTrack = () => {
     const extractIdExp = /[a-zA-Z0-9-_]{11}/;
     const newVideoId = formValues.newTrackLink.match(extractIdExp)[0];
 
     const newTracklist = [
-      ...tracklist, 
-      { trackName: formValues.newTrackName, trackVideoId: newVideoId }
+      ...tracklist,
+      { trackName: formValues.newTrackName, trackVideoId: newVideoId },
     ];
 
     setTracklist(newTracklist);
     setIsVisible(false);
-    setFormValues({ newTrackName: '', newTrackLink: '' });
-    localStorage.setItem('ambient-tracklist', JSON.stringify(newTracklist))
-  }
+    setFormValues({ newTrackName: "", newTrackLink: "" });
+    localStorage.setItem("ambient-tracklist", JSON.stringify(newTracklist));
+  };
 
   return (
-    <div className={ modalClass }>
+    <div className={modalClass}>
       <div className="new-track-info">
         <input
           type="text"
           name="newTrackName"
           placeholder="Track Name"
-          value={ formValues.newTrackName }
-          onChange={ changeHandler }
+          value={formValues.newTrackName}
+          onChange={changeHandler}
         />
         <input
           type="text"
           name="newTrackLink"
           placeholder="YouTube Link"
-          value={ formValues.newTrackLink }
-          onChange={ changeHandler }
+          value={formValues.newTrackLink}
+          onChange={changeHandler}
         />
       </div>
-      <button onClick={ handleAddTrack }>Add Track</button>
-      <button onClick={ () => setIsVisible(false) }>Cancel</button>
+      <button onClick={handleAddTrack}>Add Track</button>
+      <button onClick={() => setIsVisible(false)}>Cancel</button>
     </div>
   );
 };
-
 
 const YouTubeAmbience = () => {
   const {
@@ -80,11 +90,11 @@ const YouTubeAmbience = () => {
     isAddModalVisible,
     setIsAddModalVisible,
     isPaused,
-    isTrackLoaded, 
+    isTrackLoaded,
     rangeValue,
     togglePlayback,
     tracklist,
-    setTracklist, 
+    setTracklist,
     showVideo,
     toggleVideo,
     playerRef,
@@ -92,46 +102,57 @@ const YouTubeAmbience = () => {
   } = useYouTubeAmbience();
 
   return (
-    <section className='youtube-player media-module'>
+    <section className="youtube-player media-module">
       <h2>youtube</h2>
       <div className="player-box">
         <YouTubePlayer playerRef={playerRef} playerId={playerId} />
-        <i className={`eye-icon fas fa-reguar ${showVideo ? "fa-eye" : "fa-eye-slash"}`} onClick={toggleVideo} />
+        <i
+          className={`eye-icon fas fa-reguar ${showVideo ? "fa-eye" : "fa-eye-slash"}`}
+          onClick={toggleVideo}
+        />
       </div>
-      <div className='ambience-tracks'>
-        { tracklist.map(({trackName, trackVideoId}, i) => {
-            return <AmbientTrack
-              buttonKey={i} 
-              name={trackName} 
-              trackVideoId={trackVideoId} 
+      <div className="ambience-tracks">
+        {tracklist.map(({ trackName, trackVideoId }, i) => {
+          return (
+            <AmbientTrack
+              buttonKey={i}
+              name={trackName}
+              trackVideoId={trackVideoId}
               changeTrackFunc={changeTrack}
-              selected={i === currentButtonKey}/>
-          })
-        }
-        <i className="fas fa-plus track-buttons"
-          onClick={ ()=> setIsAddModalVisible(!isAddModalVisible) }></i>
-        <i className={`fa fa-trash-o track-buttons ${currentButtonKey ? '' : 'no-display'}`} 
-          onClick={deleteTrack}></i>
-        <AddTrackModal 
+              selected={i === currentButtonKey}
+            />
+          );
+        })}
+        <i
+          className="fas fa-plus track-buttons"
+          onClick={() => setIsAddModalVisible(!isAddModalVisible)}
+        ></i>
+        <i
+          className={`fa fa-trash-o track-buttons ${currentButtonKey ? "" : "no-display"}`}
+          onClick={deleteTrack}
+        ></i>
+        <AddTrackModal
           isVisible={isAddModalVisible}
           setIsVisible={setIsAddModalVisible}
-          tracklist={tracklist} 
-          setTracklist={setTracklist} />
+          tracklist={tracklist}
+          setTracklist={setTracklist}
+        />
       </div>
-      <div className='player-controls'>
+      <div className="player-controls">
         <PlayButton
           isPaused={isPaused}
           togglePlayback={togglePlayback}
-          isTrackLoaded={isTrackLoaded} />
+          isTrackLoaded={isTrackLoaded}
+        />
 
-        <Volume 
+        <Volume
           changePlayerVolume={changePlayerVolume}
           isTrackLoaded={isTrackLoaded}
-          rangeValue={rangeValue} />
+          rangeValue={rangeValue}
+        />
       </div>
     </section>
   );
 };
-
 
 export default YouTubeAmbience;

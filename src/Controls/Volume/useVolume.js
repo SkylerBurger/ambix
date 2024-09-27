@@ -1,7 +1,7 @@
 const useVolume = (changePlayerVolume, isTrackLoaded, rangeValue) => {
   const adjustForHumans = (newRangeValue) => {
     return parseInt((Math.pow(newRangeValue, 2) * 100).toFixed(0));
-  }
+  };
 
   const rangeHandler = (event) => {
     if (!isTrackLoaded) return;
@@ -15,11 +15,11 @@ const useVolume = (changePlayerVolume, isTrackLoaded, rangeValue) => {
     console.log(`*** new volume level ${newVolumeLevel}`);
 
     changePlayerVolume(newVolumeLevel, newRangeValue);
-  }
+  };
 
   const volumeButtonHandler = (increment) => {
     if (!isTrackLoaded) return;
-    
+
     console.log(`*** current range value ${rangeValue}`);
     console.log(`*** Increment ${increment} Type ${typeof increment}`);
     let newRangeValue = rangeValue + increment;
@@ -31,10 +31,9 @@ const useVolume = (changePlayerVolume, isTrackLoaded, rangeValue) => {
     const newVolumeLevel = adjustForHumans(newRangeValue);
     console.log(`*** new volume level ${newVolumeLevel}`);
     changePlayerVolume(newVolumeLevel, newRangeValue);
-  }
+  };
 
-  return { rangeHandler, volumeButtonHandler}
-}
-
+  return { rangeHandler, volumeButtonHandler };
+};
 
 export default useVolume;

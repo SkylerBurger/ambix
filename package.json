@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "npm run build && serve -s build",
+    "format": "prettier --write src/**/*.js src/**/*.css public/*.html public/*.css",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
@@ -29,5 +30,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
   }
 }
