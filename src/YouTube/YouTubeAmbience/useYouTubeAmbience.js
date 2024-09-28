@@ -24,7 +24,7 @@ function useYouTubeAmbience() {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [tracklist, setTracklist] = useState([]);
   const [currentButtonKey, setCurrentButtonKey] = useState(null);
-  const [showVideo, setShowVideo] = useState(true);
+  // const [showVideo, setShowVideo] = useState(true);
   const [currentTrack, setCurrentTrack] = useState(null);
   const { changeVideo, changeVolume, playVideo, stopVideo, playerRef } =
     useYouTubePlayer();
@@ -40,27 +40,27 @@ function useYouTubeAmbience() {
     }
   }, []);
 
-  useEffect(() => {
-    const playerElement = document.getElementById(playerId);
-    if (currentTrack === null) {
-      playerElement.classList.add("hidden-player");
-      setShowVideo(false);
-    } else {
-      playerElement.classList.remove("hidden-player");
-      setShowVideo(true);
-    }
-  }, [currentTrack, setShowVideo]);
+  // useEffect(() => {
+  //   const playerElement = document.getElementById(playerId);
+  //   if (currentTrack === null) {
+  //     playerElement.classList.add("hidden-player");
+  //     setShowVideo(false);
+  //   } else {
+  //     playerElement.classList.remove("hidden-player");
+  //     setShowVideo(true);
+  //   }
+  // }, [currentTrack, setShowVideo]);
 
-  const toggleVideo = () => {
-    const newShowState = !showVideo;
-    const playerElement = document.getElementById(playerId);
-    if (newShowState) {
-      playerElement.classList.remove("hidden-player");
-    } else {
-      playerElement.classList.add("hidden-player");
-    }
-    setShowVideo(!showVideo);
-  };
+  // const toggleVideo = () => {
+  //   const newShowState = !showVideo;
+  //   const playerElement = document.getElementById(playerId);
+  //   if (newShowState) {
+  //     playerElement.classList.remove("hidden-player");
+  //   } else {
+  //     playerElement.classList.add("hidden-player");
+  //   }
+  //   setShowVideo(!showVideo);
+  // };
 
   const togglePlayback = () => {
     if (isPaused) {
@@ -109,6 +109,7 @@ function useYouTubeAmbience() {
     changePlayerVolume,
     changeTrack,
     currentButtonKey,
+    currentTrack,
     deleteTrack,
     isAddModalVisible,
     setIsAddModalVisible,
@@ -119,8 +120,6 @@ function useYouTubeAmbience() {
     volumeLevel,
     tracklist,
     setTracklist,
-    toggleVideo,
-    showVideo,
     playerRef,
     playerId,
   };

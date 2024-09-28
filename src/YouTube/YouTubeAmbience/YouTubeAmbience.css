@@ -3,7 +3,7 @@
   width: auto;
 }
 
-.player-box {
+/* .player-box {
   display: flex;
   justify-content: space-around;
 }
@@ -12,7 +12,7 @@
   opacity: 0;
   pointer-events: none;
   height: 0 !important;
-}
+} */
 
 .eye-icon {
   margin-left: 5px;

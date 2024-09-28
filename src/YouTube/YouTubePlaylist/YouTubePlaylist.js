@@ -4,6 +4,7 @@ import Volume from "../../Controls/Volume/Volume.js";
 import "./YouTubePlaylist.css";
 import useYouTubePlaylist from "./useYouTubePlaylist.js";
 import { YouTubePlayer } from "../YouTubePlayer/YouTubePlayer.js";
+import PlayerCollapse from "../../PlayerCollapse/PlayerCollapse.js";
 
 const YouTubePlaylist = () => {
   const {
@@ -21,13 +22,13 @@ const YouTubePlaylist = () => {
   return (
     <section className="youtube-player media-module">
       <h2>youtube playlist</h2>
-      {playlistId && (
+      <PlayerCollapse playerId={playerId} show={playlistId}>
         <YouTubePlayer
           playerRef={playerRef}
           playerId={playerId}
           playlistId={playlistId}
         />
-      )}
+      </PlayerCollapse>
       <button
         onClick={() =>
           handleChangePlaylist("PLu6Ikpqc0gHVCcDaYQy0_W6WyvP_Kx3Wg")

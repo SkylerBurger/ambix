@@ -6,6 +6,7 @@ import Volume from "../../Controls/Volume/Volume.js";
 import "./YouTubeAmbience.css";
 import useYouTubeAmbience from "./useYouTubeAmbience.js";
 import { YouTubePlayer } from "../YouTubePlayer/YouTubePlayer.js";
+import PlayerCollapse from "../../PlayerCollapse/PlayerCollapse.js";
 
 const AmbientTrack = ({
   buttonKey,
@@ -86,6 +87,7 @@ const YouTubeAmbience = () => {
     changePlayerVolume,
     changeTrack,
     currentButtonKey,
+    currentTrack,
     deleteTrack,
     isAddModalVisible,
     setIsAddModalVisible,
@@ -95,8 +97,6 @@ const YouTubeAmbience = () => {
     togglePlayback,
     tracklist,
     setTracklist,
-    showVideo,
-    toggleVideo,
     playerRef,
     playerId,
   } = useYouTubeAmbience();
@@ -104,13 +104,10 @@ const YouTubeAmbience = () => {
   return (
     <section className="youtube-player media-module">
       <h2>youtube</h2>
-      <div className="player-box">
-        <YouTubePlayer playerRef={playerRef} playerId={playerId} />
-        <i
-          className={`eye-icon fas fa-reguar ${showVideo ? "fa-eye" : "fa-eye-slash"}`}
-          onClick={toggleVideo}
-        />
-      </div>
+      <PlayerCollapse playerId={playerId} show={currentTrack}>
+        <YouTubePlayer className="hidden-player" playerRef={playerRef} playerId={playerId} />
+      </PlayerCollapse>
+
       <div className="ambience-tracks">
         {tracklist.map(({ trackName, trackVideoId }, i) => {
           return (
