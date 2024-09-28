@@ -1,5 +1,6 @@
-#player {
-  display: none;
+#youtube-playlist-player {
+  height: auto;
+  width: auto;
 }
 
 .youtube-player {

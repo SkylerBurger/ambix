@@ -8,26 +8,40 @@ export function useYouTubePlayer() {
     if (isPaused) {
       playVideo();
     } else {
-      pauseVideo();
+      stopVideo();
     }
     setIsPaused(!isPaused);
   };
 
   const playVideo = () => {
     playerRef.current.playVideo();
+    setIsPaused(false);
   };
 
   const pauseVideo = () => {
     playerRef.current.pauseVideo();
+    setIsPaused(true);
   };
 
   const stopVideo = () => {
     playerRef.current.stopVideo();
+    setIsPaused(true);
   };
 
-  const changePlaylist = (playlistId) => {
-    const videoIds = playerRef.current.getPlaylist(playlistId);
-    playerRef.current.loadPlaylist(videoIds);
+  const changePlaylist = (playerId, playlistId) => {
+    // playerRef.current.destroy();
+
+    const container = document.getElementById(`${playerId}-container`);
+    container.innerHTML = `<div id="${playerId}"></div>`;
+    playerRef.current = new window.YT.Player(playerId, {
+      playerVars: { listType: "playlist", list: playlistId },
+      events: {
+        onReady: () => {
+          playerRef.current.playVideo();
+          setIsPaused(false);
+        },
+      },
+    });
   };
 
   const changeVideo = (newVideoId) => {
@@ -51,19 +65,29 @@ export function useYouTubePlayer() {
   };
 }
 
-export function YouTubePlayer({ playerRef, playerId }) {
+export function YouTubePlayer({ playerRef, playerId, playlistId = null }) {
   const intervalRef = useRef(0);
 
   // Wait for YT API to load to window before creating player
   useEffect(() => {
     const checkForYTAPI = () => {
-      if (window.YT !== null) {
+      if (window.YT !== null && !playerRef.current) {
         clearInterval(intervalRef.current);
-        playerRef.current = new window.YT.Player(playerId);
+        const options = playlistId
+          ? {
+              playerVars: { listType: "playlist", list: playlistId },
+              events: { onReady: () => playerRef.current.playVideo() },
+            }
+          : {};
+        playerRef.current = new window.YT.Player(playerId, options);
       }
     };
     intervalRef.current = setInterval(checkForYTAPI, 500);
   }, []);
 
-  return <div id={playerId} className="YouTubePlayer"></div>;
+  return (
+    <div id={`${playerId}-container`} className="YouTubePlayer">
+      <div id={playerId}></div>
+    </div>
+  );
 }
