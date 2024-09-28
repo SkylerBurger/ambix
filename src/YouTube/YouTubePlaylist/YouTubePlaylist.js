@@ -1,39 +1,63 @@
-import PlayButton from '../../Controls/PlayButton/PlayButton.js';
-import Volume from '../../Controls/Volume/Volume.js';
+import PlayButton from "../../Controls/PlayButton/PlayButton.js";
+import Volume from "../../Controls/Volume/Volume.js";
 
 import "./YouTubePlaylist.css";
-import useYouTube from './useYouTubePlaylist.js';
-
+import useYouTubePlaylist from "./useYouTubePlaylist.js";
+import { YouTubePlayer } from "../YouTubePlayer/YouTubePlayer.js";
+import PlayerCollapse from "../../PlayerCollapse/PlayerCollapse.js";
 
 const YouTubePlaylist = () => {
   const {
     changePlayerVolume,
-    changeTrack,
+    handleChangePlaylist,
     isPaused,
-    isTrackLoaded, 
+    isTrackLoaded,
     rangeValue,
     togglePlayback,
-  } = useYouTube();
+    playerRef,
+    playerId,
+    playlistId,
+  } = useYouTubePlaylist();
 
   return (
-    <section className='youtube-player media-module'>
+    <section className="youtube-player media-module">
       <h2>youtube playlist</h2>
-      <div id='youtube-playlist-player'></div>
-      <button onClick={() => changeTrack('PLu6Ikpqc0gHVCcDaYQy0_W6WyvP_Kx3Wg')}>Test</button>
-      <div className='player-controls'>
+      <PlayerCollapse playerId={playerId} show={playlistId}>
+        <YouTubePlayer
+          playerRef={playerRef}
+          playerId={playerId}
+          playlistId={playlistId}
+        />
+      </PlayerCollapse>
+      <button
+        onClick={() =>
+          handleChangePlaylist("PLu6Ikpqc0gHVCcDaYQy0_W6WyvP_Kx3Wg")
+        }
+      >
+        Test
+      </button>
+      <button
+        onClick={() =>
+          handleChangePlaylist("PLu6Ikpqc0gHU3v2BEIfz4hw3Zj-kuuKvw")
+        }
+      >
+        Test 2
+      </button>
+      <div className="player-controls">
         <PlayButton
           isPaused={isPaused}
           togglePlayback={togglePlayback}
-          isTrackLoaded={isTrackLoaded} />
+          isTrackLoaded={isTrackLoaded}
+        />
 
-        <Volume 
+        <Volume
           changePlayerVolume={changePlayerVolume}
           isTrackLoaded={isTrackLoaded}
-          rangeValue={rangeValue} />
+          rangeValue={rangeValue}
+        />
       </div>
     </section>
   );
 };
-
 
 export default YouTubePlaylist;

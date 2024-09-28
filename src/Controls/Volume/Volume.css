@@ -1,17 +1,17 @@
 .volume-controls {
-    display: flex;
-    justify-content: center;
-    height: 60px;
+  display: flex;
+  justify-content: center;
+  height: 60px;
 }
 
 .dim {
-    color: rgba(117, 117, 117, 0.5);
+  color: rgba(117, 117, 117, 0.5);
 }
 
 .range {
-    transition: all 1s ease-out;
+  transition: all 1s ease-out;
 }
 
 .dim-range {
-    opacity: 0.17;
+  opacity: 0.17;
 }

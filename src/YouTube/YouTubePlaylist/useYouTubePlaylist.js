@@ -1,76 +1,41 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
+import { useYouTubePlayer } from "../YouTubePlayer/YouTubePlayer";
 
 function useYouTubePlaylist() {
-  const playerRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(true);
+  const [playlistId, setPlaylistId] = useState(null);
   const [isTrackLoaded, setIsTrackLoaded] = useState(false);
   const [rangeValue, setRangeValue] = useState(0.5);
   const [volumeLevel, setVolumeLevel] = useState(50);
+  const { changePlaylist, changeVolume, isPaused, togglePlayback, playerRef } =
+    useYouTubePlayer();
+  const playerId = "youtube-playlist-player";
 
-  const handleOnReady = (newPlaylistId) => {
-    console.log(`*** attempting to fetch playlist ${newPlaylistId}`);
-    const videoIdsArr = playerRef.current.getPlaylist(newPlaylistId);
-    console.log(`*** Video IDs fetched: ${videoIdsArr}`);
-    console.log(`*** Loading playlist into player`)
-    playerRef.current.loadPlaylist(videoIdsArr);
-    console.log(`*** starting video`)
-    playerRef.current.playVideo();
-  }
-
-  const createPlayer = (playlistId) => {
-    playerRef.current = new window.YT.Player(
-      'youtube-playlist-player',
-      {
-        height: '0',
-        width: '0',
-        playerVars: {
-          listType: 'playlist',
-          list: playlistId,
-        },
-        events: {
-          "onReady": () => handleOnReady(playlistId),
-        },
-      }
-    );
-    
+  const handleChangePlaylist = (newPlaylistId) => {
+    console.log(`Handle change playlist: ${newPlaylistId}`);
+    setPlaylistId(newPlaylistId);
+    changePlaylist(playerId, newPlaylistId);
     setIsTrackLoaded(true);
-  }
-
-  const pause = () => {
-    playerRef.current.stopVideo();
-    setIsPaused(true);
-  };
-  
-  const resume = () => {
-    playerRef.current.playVideo();
-    setIsPaused(false);
-  };
-
-  const togglePlayback = () => {
-    isPaused ? resume() : pause();
-  };
-
-  const changeTrack = (newPlaylistId) => {
-    createPlayer(newPlaylistId);
   };
 
   const changePlayerVolume = (newVolumeLevel, newRangeValue) => {
-    playerRef.current.setVolume(newVolumeLevel);
+    changeVolume(newVolumeLevel);
     setVolumeLevel(newVolumeLevel);
     setRangeValue(newRangeValue);
   };
 
   return {
     changePlayerVolume,
-    changeTrack,
+    handleChangePlaylist,
     isPaused,
     isTrackLoaded,
     rangeValue,
     togglePlayback,
     volumeLevel,
+    playerRef,
+    playerId,
+    playlistId,
   };
 }
-
 
 export default useYouTubePlaylist;
