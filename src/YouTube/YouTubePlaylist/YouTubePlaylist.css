@@ -3,6 +3,10 @@
   width: auto;
 }
 
+.eye-icon {
+  margin-left: 5px;
+}
+
 .youtube-player {
   justify-content: space-between;
 }

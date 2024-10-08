@@ -105,7 +105,11 @@ const YouTubeAmbience = () => {
     <section className="youtube-player media-module">
       <h2>youtube</h2>
       <PlayerCollapse playerId={playerId} show={currentTrack}>
-        <YouTubePlayer className="hidden-player" playerRef={playerRef} playerId={playerId} />
+        <YouTubePlayer
+          className="hidden-player"
+          playerRef={playerRef}
+          playerId={playerId}
+        />
       </PlayerCollapse>
 
       <div className="ambience-tracks">

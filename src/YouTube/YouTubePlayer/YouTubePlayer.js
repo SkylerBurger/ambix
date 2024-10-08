@@ -29,8 +29,6 @@ export function useYouTubePlayer() {
   };
 
   const changePlaylist = (playerId, playlistId) => {
-    // playerRef.current.destroy();
-
     const container = document.getElementById(`${playerId}-container`);
     container.innerHTML = `<div id="${playerId}"></div>`;
     playerRef.current = new window.YT.Player(playerId, {
