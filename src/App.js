@@ -1,5 +1,5 @@
 import YouTubeAmbience from "./YouTube/YouTubeAmbience/YouTubeAmbience";
-import YouTubePlaylist from "./YouTube/YouTubePlaylist/YouTubePlaylist";
+import NewYTPlaylist from "./YouTube/NewYTPlaylist/NewYTPlaylist";
 
 import "./App.css";
 
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <h1>Ambix</h1>
       <div className="media-modules">
-        <YouTubePlaylist />
+        <NewYTPlaylist />
         <YouTubeAmbience />
       </div>
     </div>
