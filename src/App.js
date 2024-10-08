@@ -1,5 +1,5 @@
 import YouTubeAmbience from "./YouTube/YouTubeAmbience/YouTubeAmbience";
-import NewYTPlaylist from "./YouTube/NewYTPlaylist/NewYTPlaylist";
+import NewYTPlaylist from "./YouTube/YouTubePlaylist/YouTubePlaylist";
 
 import "./App.css";
 

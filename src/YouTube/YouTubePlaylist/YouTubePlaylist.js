@@ -3,8 +3,8 @@ import { useState } from "react";
 import PlayButton from "../../Controls/PlayButton/PlayButton.js";
 import Volume from "../../Controls/Volume/Volume.js";
 
-import "./NewYTPlaylist.css";
-import useNewYTPlaylist from "./useNewYTPlaylist.js";
+import "./YouTubePlaylist.css";
+import useYouTubePlaylist from "./useYouTubePlaylist.js";
 import { YouTubePlayer } from "../YouTubePlayer/YouTubePlayer.js";
 import PlayerCollapse from "../../PlayerCollapse/PlayerCollapse.js";
 
@@ -99,13 +99,17 @@ const YouTubeAmbience = () => {
     setTracklist,
     playerRef,
     PLAYER_ID,
-  } = useNewYTPlaylist();
+  } = useYouTubePlaylist();
 
   return (
     <section className="youtube-player media-module">
       <h2>youtube</h2>
       <PlayerCollapse playerId={PLAYER_ID} show={playlistId}>
-        <YouTubePlayer className="hidden-player" playerRef={playerRef} playerId={PLAYER_ID} />
+        <YouTubePlayer
+          className="hidden-player"
+          playerRef={playerRef}
+          playerId={PLAYER_ID}
+        />
       </PlayerCollapse>
 
       <div className="ambience-tracks">

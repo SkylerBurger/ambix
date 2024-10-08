@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { useYouTubePlayer } from "../YouTubePlayer/YouTubePlayer";
 
-
 function useYouTubeAmbience() {
   const [isPaused, setIsPaused] = useState(true);
   const [isTrackLoaded, setIsTrackLoaded] = useState(false);
@@ -12,16 +11,21 @@ function useYouTubeAmbience() {
   const [tracklist, setTracklist] = useState([]);
   const [currentButtonKey, setCurrentButtonKey] = useState(null);
   const [playlistId, setPlaylistId] = useState(null);
-  const { changePlaylist, changeVolume, playVideo, pauseVideo, stopVideo, playerRef } =
-  useYouTubePlayer();
+  const {
+    changePlaylist,
+    changeVolume,
+    playVideo,
+    pauseVideo,
+    stopVideo,
+    playerRef,
+  } = useYouTubePlayer();
   const PLAYER_ID = "youtube-playlist-player";
   const STORAGE_ID = "playlist-collection";
   const defaultPlaylists = [
     { trackName: "demo 1", trackVideoId: "PLu6Ikpqc0gHXOLgsJVFi3-qAqQO12iTFx" },
     { trackName: "demo 2", trackVideoId: "PLu6Ikpqc0gHXFVlqOCuCJM0ZubSuf30XN" },
-  
   ];
-  
+
   const saveTracklist = (playlistCollection) => {
     localStorage.setItem(STORAGE_ID, JSON.stringify(playlistCollection));
   };
